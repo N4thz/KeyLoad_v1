@@ -33,7 +33,6 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     Acessos_DAO dados = new Acessos_DAO();
     GerarNotificacao notificacao = new GerarNotificacao();
     String NovoApelido, NovoLogin, NovaSenha, SenhaMaster;
-    String conteudoQR = new String();
     String[] valorcolunas = {"apelido","nome", "senha"};
     
     public TelaPrincipal() throws ParseException, SQLException {
@@ -133,10 +132,10 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(3).setMinWidth(50);
             jTable1.getColumnModel().getColumn(3).setMaxWidth(50);
-            jTable1.getColumnModel().getColumn(4).setMinWidth(50);
-            jTable1.getColumnModel().getColumn(4).setMaxWidth(50);
-            jTable1.getColumnModel().getColumn(5).setMinWidth(50);
-            jTable1.getColumnModel().getColumn(5).setMaxWidth(50);
+            jTable1.getColumnModel().getColumn(4).setMinWidth(55);
+            jTable1.getColumnModel().getColumn(4).setMaxWidth(55);
+            jTable1.getColumnModel().getColumn(5).setMinWidth(65);
+            jTable1.getColumnModel().getColumn(5).setMaxWidth(65);
         }
 
         jCheckBox1.setText("Exibir Senhas");
@@ -547,10 +546,11 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                 thread.start();
             }else{
                 System.out.println(jTable1.getValueAt(0, 2).toString());
-                conteudoQR = jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString();
+                String conteudoQR = jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString();
+                String TituloQR = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
                 System.out.println(conteudoQR);
                 JFrame QRCodeGerador = new JFrame();
-                QRCodeGerador dialogQR = new QRCodeGerador(QRCodeGerador, true, conteudoQR);
+                QRCodeGerador dialogQR = new QRCodeGerador(QRCodeGerador, true, conteudoQR, TituloQR);
                 dialogQR.setVisible(true);
             }
         });
