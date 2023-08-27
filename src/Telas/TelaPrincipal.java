@@ -33,6 +33,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     Acessos_DAO dados = new Acessos_DAO();
     GerarNotificacao notificacao = new GerarNotificacao();
     String NovoApelido, NovoLogin, NovaSenha, SenhaMaster;
+    String conteudoQR = new String();
     String[] valorcolunas = {"apelido","nome", "senha"};
     
     public TelaPrincipal() throws ParseException, SQLException {
@@ -72,6 +73,10 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         column.setCellRenderer(new ButtonRenderer());
         column.setCellEditor(new ButtonEditor());
         
+        TableColumn columnQR = jTable1.getColumnModel().getColumn(5);
+        columnQR.setCellRenderer(new ButtonRendererQR());
+        columnQR.setCellEditor(new ButtonEditorQR());
+        
         senhaMaster();
         System.out.println(dados.Apelido);
     }
@@ -101,14 +106,14 @@ public final class TelaPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Apelido", "Login", "Senha", "Exibir", "Copiar"
+                "Apelido", "Login", "Senha", "Exibir", "Copiar", "QR Code"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true
+                false, false, false, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -130,6 +135,8 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(3).setMaxWidth(50);
             jTable1.getColumnModel().getColumn(4).setMinWidth(50);
             jTable1.getColumnModel().getColumn(4).setMaxWidth(50);
+            jTable1.getColumnModel().getColumn(5).setMinWidth(50);
+            jTable1.getColumnModel().getColumn(5).setMaxWidth(50);
         }
 
         jCheckBox1.setText("Exibir Senhas");
@@ -274,6 +281,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+    
     
     class MyRunnable implements Runnable {
         @Override
@@ -493,6 +501,65 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         public Component getTableCellEditorComponent(JTable table, Object value,
                 boolean isSelected, int row, int column) {
             return button;
+        }
+    }   
+    
+    class ButtonRendererQR extends DefaultTableCellRenderer {
+
+    private final JButton buttonQR;
+
+    public ButtonRendererQR() {
+        buttonQR = new JButton("");
+        Icon icon = new ImageIcon("build\\classes\\Imagens\\icons8-codigo-qr-100.png");
+        int largura = 15; // largura desejada
+        int altura = 15; // altura desejada
+        Image image = ((ImageIcon) icon).getImage();
+        Image novaImagem = image.getScaledInstance(largura, altura, java.awt.Image.SCALE_SMOOTH);
+        Icon novoIcon = new ImageIcon(novaImagem);
+        buttonQR.setIcon(novoIcon);
+    }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            return buttonQR;
+        }
+    }
+    
+    class ButtonEditorQR extends DefaultCellEditor {
+        
+
+    private final JButton buttonQR;
+
+    public ButtonEditorQR() {
+        super(new JCheckBox());
+        buttonQR = new JButton("");
+        Icon icon = new ImageIcon("build\\classes\\Imagens\\icons8-codigo-qr-100.png");
+        int largura = 15; // largura desejada
+        int altura = 15; // altura desejada
+        Image image = ((ImageIcon) icon).getImage();
+        Image novaImagem = image.getScaledInstance(largura, altura, java.awt.Image.SCALE_SMOOTH);
+        Icon novoIcon = new ImageIcon(novaImagem);
+        buttonQR.setIcon(novoIcon);
+        buttonQR.addActionListener((ActionEvent e) -> {
+            if (jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString().contains("*")){
+                notificacao.exibirNotificacao("Atenção: Senha Oculta", "Exiba a senha para poder gerar o QRCode",200);
+                Thread thread = new Thread(new MyRunnable());
+                thread.start();
+            }else{
+                System.out.println(jTable1.getValueAt(0, 2).toString());
+                conteudoQR = jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString();
+                System.out.println(conteudoQR);
+                JFrame QRCodeGerador = new JFrame();
+                QRCodeGerador dialogQR = new QRCodeGerador(QRCodeGerador, true, conteudoQR);
+                dialogQR.setVisible(true);
+            }
+        });
+    }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                boolean isSelected, int row, int column) {
+            return buttonQR;
         }
     }   
     

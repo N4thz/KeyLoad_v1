@@ -77,12 +77,13 @@
                   <Font name="Century Gothic" size="11" style="1"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="5" rowCount="0">
+                  <Table columnCount="6" rowCount="0">
                     <Column editable="false" title="Apelido" type="java.lang.Object"/>
                     <Column editable="false" title="Login" type="java.lang.Object"/>
                     <Column editable="false" title="Senha" type="java.lang.Object"/>
                     <Column editable="true" title="Exibir" type="java.lang.Boolean"/>
                     <Column editable="true" title="Copiar" type="java.lang.Object"/>
+                    <Column editable="true" title="QR Code" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -98,6 +99,11 @@
                       <Renderer/>
                     </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="50" minWidth="50" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>

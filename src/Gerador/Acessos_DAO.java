@@ -14,7 +14,7 @@ public class Acessos_DAO {
     
     public ArrayList<String> Apelido, Login, Senha;
     public int id;
-    
+    private String ConteudoQR;
     public Acessos_DAO() {
         this.Apelido = new ArrayList<>();
         this.Senha = new ArrayList<>();
@@ -63,5 +63,13 @@ public class Acessos_DAO {
     
     public String getSenha(int i){
         return Senha.get(i);
+    }
+    
+    public String getConteudoQR(){
+        return ConteudoQR;
+    }
+    
+    public void setConteudoQR(String conteudo){
+        ConteudoQR = conteudo;
     }
 }
