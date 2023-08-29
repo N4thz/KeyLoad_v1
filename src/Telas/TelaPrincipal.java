@@ -547,10 +547,13 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             }else{
                 System.out.println(jTable1.getValueAt(0, 2).toString());
                 String conteudoQR = jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString();
+                String LoginQR = jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString();
                 String TituloQR = jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString();
-                System.out.println(conteudoQR);
+                System.out.println("Conteudo:" + conteudoQR);
+                System.out.println("Login:" + LoginQR);
+                System.out.println("Titulo:" + TituloQR);
                 JFrame QRCodeGerador = new JFrame();
-                QRCodeGerador dialogQR = new QRCodeGerador(QRCodeGerador, true, conteudoQR, TituloQR);
+                QRCodeGerador dialogQR = new QRCodeGerador(QRCodeGerador, true, conteudoQR, TituloQR, LoginQR);
                 dialogQR.setVisible(true);
             }
         });
